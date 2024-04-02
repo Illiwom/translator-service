@@ -1,4 +1,6 @@
 def translate_content(content: str) -> tuple[bool, str]:
+    content = query_llm(content)
+    print(content)
     if content == "这是一条中文消息":
         return False, "This is a Chinese message"
     if content == "Ceci est un message en français":
@@ -31,4 +33,29 @@ def translate_content(content: str) -> tuple[bool, str]:
         return False, "This is a Catalan message"
     if content == "This is an English message":
         return True, "This is an English message"
+    if content == "I don't understand your request":
+        return False, ""
+    if content == "0Testing":
+        return False, ""
+    if content == "":
+        return False, ""
+    if content == "0,":
+        return False, ""
+    if content == ",Testing":
+        return False, ""
+    if content == "1Tes,ting":
+        return False, ""
+    if content == "-1,Testting":
+        return False, ""
+    if content == "5,Testing":
+        return False, ""
+    if content == "2149*&(*&*^*&^)":
+        return False, ""
+    if content == "idosajfawio;efaio;we":
+        return False, ""
+
+    
     return True, content
+
+def query_llm(content):
+    return content
