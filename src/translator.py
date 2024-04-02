@@ -57,5 +57,6 @@ def translate_content(content: str) -> tuple[bool, str]:
     
     return True, content
 
+# temporary mocking for checkpoint2 before LLM implementation
 def query_llm(content):
     return content
