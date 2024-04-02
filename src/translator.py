@@ -1,6 +1,5 @@
 def translate_content(content: str) -> tuple[bool, str]:
     content = query_llm(content)
-    print(content)
     if content == "这是一条中文消息":
         return False, "This is a Chinese message"
     if content == "Ceci est un message en français":
