@@ -2,12 +2,11 @@ from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 from google.cloud import aiplatform
 import google.auth
 
-credentials, project = google.auth.default()
+auth.authenticate_user()
 
 aiplatform.init(
-    project= project,
-    location= 'us-central1',
-    credentials= credentials,
+    project= 'extreme-startup-419300',
+    location= 'us-central1'
 )
 
 chat_model = ChatModel.from_pretrained("chat-bison@001")
