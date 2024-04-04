@@ -1,10 +1,20 @@
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
+from google.cloud import aiplatform
+import google.auth
 
+credentials, project = google.auth.default()
+
+aiplatform.init(
+    project= project,
+    location= 'us-central1',
+    credentials= credentials,
+)
+
+chat_model = ChatModel.from_pretrained("chat-bison@001")
 
 # TODO: Implement Basic LLM integration
 def get_translation(post: str) -> str:
     # ----------------- DO NOT MODIFY ------------------ #
-    chat_model = ChatModel.from_pretrained("chat-bison@001")
     parameters = {
         "temperature": 0.7,  # Temperature controls the degree of randomness in token selection.
         "max_output_tokens": 256,  # Token limit determines the maximum amount of text output.
@@ -19,7 +29,6 @@ def get_translation(post: str) -> str:
 
 def get_language(post: str) -> str:
     # ----------------- DO NOT MODIFY ------------------ #
-    chat_model = ChatModel.from_pretrained("chat-bison@001")
     parameters = {
         "temperature": 0.7,  # Temperature controls the degree of randomness in token selection.
         "max_output_tokens": 256,  # Token limit determines the maximum amount of text output.
@@ -32,7 +41,6 @@ def get_language(post: str) -> str:
     return response.text
 
 def query_llm_robust(post: str) -> tuple[bool, str]:
-    chat_model = ChatModel.from_pretrained("chat-bison@001")
     parameters = {
         "temperature": 0.7,
         "max_output_tokens": 256
