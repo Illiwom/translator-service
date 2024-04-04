@@ -32,7 +32,7 @@ def get_language(post: str) -> str:
     return response.text
 
 def query_llm_robust(post: str) -> tuple[bool, str]:
-   
+    chat_model = ChatModel.from_pretrained("chat-bison@001")
     parameters = {
         "temperature": 0.7,
         "max_output_tokens": 256
