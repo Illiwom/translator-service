@@ -1,45 +1,7 @@
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
-from google.cloud import aiplatform
-import google.auth
-
-google.auth.authenticate_user()
-
-aiplatform.init(
-    project= 'extreme-startup-419300',
-    location= 'us-central1'
-)
-
-chat_model = ChatModel.from_pretrained("chat-bison@001")
-
-# TODO: Implement Basic LLM integration
-def get_translation(post: str) -> str:
-    # ----------------- DO NOT MODIFY ------------------ #
-    parameters = {
-        "temperature": 0.7,  # Temperature controls the degree of randomness in token selection.
-        "max_output_tokens": 256,  # Token limit determines the maximum amount of text output.
-    }
-
-     # ---------------- YOUR CODE HERE ---------------- #
-    context = "Translate this following non-English text into English. If it is already in English, return the original text.\n"
-    chat = chat_model.start_chat(context=context)
-    response = chat.send_message(post, **parameters)
-    return response.text
-
-
-def get_language(post: str) -> str:
-    # ----------------- DO NOT MODIFY ------------------ #
-    parameters = {
-        "temperature": 0.7,  # Temperature controls the degree of randomness in token selection.
-        "max_output_tokens": 256,  # Token limit determines the maximum amount of text output.
-    }
-
-     # ---------------- YOUR CODE HERE ---------------- #
-    context = "Return the language of this text:\n"
-    chat = chat_model.start_chat(context=context)
-    response = chat.send_message(post, **parameters)
-    return response.text
 
 def query_llm_robust(post: str) -> tuple[bool, str]:
+    chat_model = ChatModel.from_pretrained("chat-bison@001")
     parameters = {
         "temperature": 0.7,
         "max_output_tokens": 256
