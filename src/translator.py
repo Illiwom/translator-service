@@ -1,6 +1,6 @@
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 
-extreme-startup-419300
+
 # TODO: Implement Basic LLM integration
 def get_translation(post: str) -> str:
     # ----------------- DO NOT MODIFY ------------------ #
@@ -19,7 +19,7 @@ def get_translation(post: str) -> str:
 
 def get_language(post: str) -> str:
     # ----------------- DO NOT MODIFY ------------------ #
-
+    chat_model = ChatModel.from_pretrained("chat-bison@001")
     parameters = {
         "temperature": 0.7,  # Temperature controls the degree of randomness in token selection.
         "max_output_tokens": 256,  # Token limit determines the maximum amount of text output.
