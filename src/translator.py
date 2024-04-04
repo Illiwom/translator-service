@@ -2,6 +2,7 @@ from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 
 def query_llm_robust(post: str) -> tuple[bool, str]:
     chat_model = ChatModel.from_pretrained("chat-bison@001")
+    print(chat_model)
     parameters = {
         "temperature": 0.7,
         "max_output_tokens": 256
@@ -13,7 +14,9 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
     Make these two outputs comma-separated csv-format in one line and no space between the comma and the translation in the form boolean,english_translation
     Text:'''
     chat = chat_model.start_chat(context=context)
+    print(chat)
     response = chat.send_message(post, **parameters)
+    print(response.text)
     comma_index = response.text.find(',')
     if comma_index == -1:
         return (False, "")
