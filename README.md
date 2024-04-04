@@ -2,7 +2,6 @@
 
 <img width="374" alt="image" src="https://github.com/CMU-313/translator-service/assets/5557706/47e9c1fb-5b9d-41fc-b825-05994867388a">
 
-
 # Install Dependencies
 
 You need to install `flask` and `pytest` to run this application.
@@ -17,10 +16,8 @@ pip3 install pytest
 Please follow [this](https://cmu-313.github.io/recitations/reci6-deployment/#task-1b-deploy-on-google-cloud-platform)
 tutorial to deploy translator service to Google cloud.
 
-
 > [!WARNING]
 > Set the Entrypoint to empty in the `Set up with Cloud Build` section.
-
 
 # Test your deployment
 
@@ -28,13 +25,12 @@ Once you have deployed this service, you can access the following link `https://
 
 ```json
 {
-    "is_english":false,
-    "translated_content":"This is a Chinese message"
+  "is_english": false,
+  "translated_content": "This is a Chinese message"
 }
 ```
 
 Run pytest locally
-
 
 ```
 python3 -m pytest
@@ -69,11 +65,9 @@ export TRANSLATOR_API=https://PATH_TO_YOUR_DEPLOYED_SERVICE
 
 To add environment variables to your GCP deployment, you can follow [this](https://cloud.google.com/run/docs/configuring/environment-variables) tutorial.
 
-
 Once you have deployed the changes, you can test the translator service by creating a new post in NodeBB with non-English content `这是一条中文消息`.
 
 ![image](./assets/image.png)
-
 
 # Implement LLM based translator
 
@@ -82,11 +76,10 @@ implementation. The `translate` method takes a string `content` as input and
 returns a tuple `(bool, str)`. Indicating if `content` is in English and
 the translated content if `content` is not in English.
 
-Integrate LLM to a production service is slightly different from using it in a 
+Integrate LLM to a production service is slightly different from using it in a
 notebook. You can follow [this](https://ai.google.dev/tutorials/python_quickstart)
-and [this](https://github.com/google/generative-ai-python) 
-to setup LLM API properly. 
-
+and [this](https://github.com/google/generative-ai-python)
+to setup LLM API properly.
 
 > [!WARNING]
 > Do not push your API key to your repository. You should use environment variables to store your API key.
