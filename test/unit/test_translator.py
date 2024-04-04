@@ -1,5 +1,6 @@
 import vertexai
 from mock import patch
+from src.translator import query_llm_robust
 
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_unexpected_language(mocker):
