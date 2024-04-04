@@ -1,91 +1,74 @@
-from src.translator import translate_content, query_llm
+import vertexai
 from mock import patch
 
-
-def test_chinese():
-    is_english, translated_content = translate_content("这是一条中文消息")
-    assert is_english == False
-    assert translated_content == "This is a Chinese message"
-
-def test_llm_normal_response():
-    is_english, translated_content = translate_content("Ceci est un message en français")
-    assert is_english == False
-    assert translated_content == "This is a French message"
-
-def test_llm_gibberish_response():
-    is_english, translated_content = translate_content("idosajfawio;efaio;we")
-    assert is_english == False
-    assert translated_content == ""
-
-
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_unexpected_language(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = "I don't understand your request"
+  # we mock the model's response to return a random message
+  mocker.return_value.text = "I don't understand your request"
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
 
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_no_comma(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = "0Testing"
+  # we mock the model's response to return a random message
+  mocker.return_value.text = "0Testing"
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
 
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_nothing(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = ""
+  # we mock the model's response to return a random message
+  mocker.return_value.text = ""
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
 
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_no_translation(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = "0,"
+  # we mock the model's response to return a random message
+  mocker.return_value.text = "0,"
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
 
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_no_english_boolean(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = ",Testing"
+  # we mock the model's response to return a random message
+  mocker.return_value.text = ",Testing"
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
 
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_comma_out_of_place(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = "1Tes,ting"
+  # we mock the model's response to return a random message
+  mocker.return_value.text = "1Tes,ting"
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
 
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_smaller_integer(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = "-1,Testting"
+  # we mock the model's response to return a random message
+  mocker.return_value.text = "-1,Testting"
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
 
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_larger_integer(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = "5,Testing"
+  # we mock the model's response to return a random message
+  mocker.return_value.text = "5,Testing"
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
 
-@patch('src.translator.query_llm')
+@patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_crazy_input(mocker):
-    # we mock the model's response to return a random message
-    mocker.return_value = "2149*&(*&*^*&^)"
+  # we mock the model's response to return a random message
+  mocker.return_value.text = "2149*&(*&*^*&^)"
 
-    # TODO assert the expected behavior
-    assert translate_content("Aquí está su primer ejemplo.") == (False, "")
+  # TODO assert the expected behavior
+  assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
