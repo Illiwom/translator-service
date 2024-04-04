@@ -2,7 +2,7 @@ from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 from google.cloud import aiplatform
 import google.auth
 
-auth.authenticate_user()
+google.auth.authenticate_user()
 
 aiplatform.init(
     project= 'extreme-startup-419300',
