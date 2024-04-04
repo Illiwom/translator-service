@@ -16,7 +16,7 @@ def test_unexpected_language(mocker_from_pretrained, mocker_start_chat, mocker_s
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_no_comma(mocker_from_pretrained, mocker_start_chat, mocker_send_message):
     # we mock the model's response to return a random message
-    mocker.return_value.text = "0Testing"
+    mocker_send_message.return_value.text = "0Testing"
 
     # TODO assert the expected behavior
     assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
@@ -26,7 +26,7 @@ def test_no_comma(mocker_from_pretrained, mocker_start_chat, mocker_send_message
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_nothing(mocker_from_pretrained, mocker_start_chat, mocker_send_message):
     # we mock the model's response to return a random message
-    mocker.return_value.text = ""
+    mocker_send_message.return_value.text = ""
 
     # TODO assert the expected behavior
     assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
@@ -36,7 +36,7 @@ def test_nothing(mocker_from_pretrained, mocker_start_chat, mocker_send_message)
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_no_translation(mocker_from_pretrained, mocker_start_chat, mocker_send_message):
     # we mock the model's response to return a random message
-    mocker.return_value.text = "0,"
+    mocker_send_message.return_value.text = "0,"
 
     # TODO assert the expected behavior
     assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
@@ -46,7 +46,7 @@ def test_no_translation(mocker_from_pretrained, mocker_start_chat, mocker_send_m
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_no_english_boolean(mocker_from_pretrained, mocker_start_chat, mocker_send_message):
     # we mock the model's response to return a random message
-    mocker.return_value.text = ",Testing"
+    mocker_send_message.return_value.text = ",Testing"
 
     # TODO assert the expected behavior
     assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
@@ -56,7 +56,7 @@ def test_no_english_boolean(mocker_from_pretrained, mocker_start_chat, mocker_se
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_comma_out_of_place(mocker_from_pretrained, mocker_start_chat, mocker_send_message):
     # we mock the model's response to return a random message
-    mocker.return_value.text = "1Tes,ting"
+    mocker_send_message.return_value.text = "1Tes,ting"
 
     # TODO assert the expected behavior
     assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
@@ -66,7 +66,7 @@ def test_comma_out_of_place(mocker_from_pretrained, mocker_start_chat, mocker_se
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_smaller_integer(mocker_from_pretrained, mocker_start_chat, mocker_send_message):
     # we mock the model's response to return a random message
-    mocker.return_value.text = "-1,Testting"
+    mocker_send_message.return_value.text = "-1,Testting"
 
     # TODO assert the expected behavior
     assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
@@ -76,7 +76,7 @@ def test_smaller_integer(mocker_from_pretrained, mocker_start_chat, mocker_send_
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_larger_integer(mocker_from_pretrained, mocker_start_chat, mocker_send_message):
     # we mock the model's response to return a random message
-    mocker.return_value.text = "5,Testing"
+    mocker_send_message.return_value.text = "5,Testing"
 
     # TODO assert the expected behavior
     assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
@@ -86,7 +86,7 @@ def test_larger_integer(mocker_from_pretrained, mocker_start_chat, mocker_send_m
 @patch('vertexai.preview.language_models._PreviewChatSession.send_message')
 def test_crazy_input(mocker_from_pretrained, mocker_start_chat, mocker_send_message):
     # we mock the model's response to return a random message
-    mocker.return_value.text = "2149*&(*&*^*&^)"
+    mocker_send_message.return_value.text = "2149*&(*&*^*&^)"
 
     # TODO assert the expected behavior
     assert query_llm_robust("Aquí está su primer ejemplo.") == (False, "")
