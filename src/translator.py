@@ -13,10 +13,11 @@ def query_llm_robust(post: str) -> tuple[bool, str]:
     The original exact text (case-sensitive) if it is unreadable/invalid, and an English translation of the entire text given otherwise
     Make these two outputs comma-separated csv-format in one line and no space between the comma and the translation in the form boolean,english_translation
     Text:'''
-    chat = chat_model.start_chat(context=context)
-    print(chat)
-    response = chat.send_message(post, **parameters)
-    print(response.text)
+    try:
+        chat = chat_model.start_chat(context=context)
+        response = chat.send_message(post, **parameters)
+    except: 
+        return (False, "")
     comma_index = response.text.find(',')
     if comma_index == -1:
         return (False, "")
